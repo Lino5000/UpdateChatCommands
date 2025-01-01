@@ -8,6 +8,7 @@ using StardewValley.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace ChatCommands.ClassReplacements
@@ -50,7 +51,9 @@ namespace ChatCommands.ClassReplacements
             this.bChoosingEmoji = helper.Reflection.GetField<bool>(this, "choosingEmoji");
             Texture2D chatBoxTexture = Game1.content.Load<Texture2D>("LooseSprites\\chatBox");
 
-            this.chatBox.OnEnterPressed -= helper.Reflection.GetField<TextBoxEvent>(this, "e").GetValue();
+            Type[] onEnterDelegateParamTypes = { typeof(TextBox) };
+            MethodInfo textBoxEnterInfo = this.GetType().GetMethod("textBoxEnter", onEnterDelegateParamTypes);
+            this.chatBox.OnEnterPressed -= (TextBoxEvent)textBoxEnterInfo.CreateDelegate(typeof(TextBoxEvent), this);
             this.chatBox = this.commandChatTextBox = new CommandChatTextBox(chatBoxTexture,
                 null, Game1.smallFont, Color.White);
             Game1.keyboardDispatcher.Subscriber = this.chatBox;

@@ -20,6 +20,7 @@ namespace ChatCommands
         private NotifyingTextWriter consoleNotifier;
         private InputState inputState;
         private ChatCommandsConfig modConfig;
+        private CommandInvoker commandInvoker;
 
         private int repeatWaitPeriod = BaseWaitPeriod;
 
@@ -42,7 +43,7 @@ namespace ChatCommands
                 parts[0] = "help";
 
             this.consoleNotifier.Notify = true;
-            this.Helper.ConsoleCommands.Trigger(parts[0], parts.Skip(1).ToArray());
+            this.commandInvoker.InvokeCommand(parts[0], parts.Skip(1).ToArray());
             this.consoleNotifier.Notify = false;
         }
 
@@ -52,6 +53,7 @@ namespace ChatCommands
         {
             this.commandValidator = new CommandValidator(helper.ConsoleCommands);
             this.consoleNotifier = new NotifyingTextWriter(Console.Out, this.OnLineWritten);
+            this.commandInvoker = new CommandInvoker(this.Helper, this.Monitor);
 
             this.inputState = helper.Reflection.GetField<InputState>(typeof(Game1), "input").GetValue();
 
