@@ -3,8 +3,8 @@
   "Author": "Cat",
   "Version": "1.15.3",
   "Description": "Lets you run SMAPI commands from the chat window! Updated for SV 1.6 by Lino5000",
-  "UniqueID": "Lino5000.chatcommands",
+  "UniqueID": "cat.chatcommands",
   "EntryDll": "ChatCommands.dll",
   "MinimumApiVersion": "4.0.0",
-  "UpdateKeys": [ ]
+  "UpdateKeys": [ "Nexus:2092" ]
 }
