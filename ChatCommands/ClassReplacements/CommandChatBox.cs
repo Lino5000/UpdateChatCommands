@@ -278,6 +278,8 @@ namespace ChatCommands.ClassReplacements
 
             foreach (string part in text2.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None))
                 this.AddNewMessage(part, this.messageColor(chatKind), this.chatBox.Font, language);
+
+            base.receiveChatMessage(sourceFarmer, chatKind, language, message);
         }
 
         /// <summary>Adds a message without any formatting to the chat box.</summary>
