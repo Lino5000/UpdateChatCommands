@@ -1,6 +1,7 @@
 ﻿using ChatCommands.ClassReplacements;
 using ChatCommands.Commands;
 using ChatCommands.Util;
+using HarmonyLib;
 using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -51,6 +52,9 @@ namespace ChatCommands
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public override void Entry(IModHelper helper)
         {
+            var harmony = new Harmony(this.ModManifest.UniqueID);
+            ChatBoxTranspiler.ApplyPatches(harmony, this.Monitor);
+
             this.commandValidator = new CommandValidator(helper.ConsoleCommands);
             this.consoleNotifier = new NotifyingTextWriter(Console.Out, this.OnLineWritten);
             this.commandInvoker = new CommandInvoker(this.Helper, this.Monitor);

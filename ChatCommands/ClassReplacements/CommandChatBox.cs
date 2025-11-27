@@ -279,6 +279,7 @@ namespace ChatCommands.ClassReplacements
             foreach (string part in text2.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None))
                 this.AddNewMessage(part, this.messageColor(chatKind), this.chatBox.Font, language);
 
+            // This would cause the message to be added twice, if it weren't for the patch in `Transpilers/ChatBoxTranspiler.cs`
             base.receiveChatMessage(sourceFarmer, chatKind, language, message);
         }
 
